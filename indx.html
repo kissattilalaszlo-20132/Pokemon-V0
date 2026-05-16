@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="st.css" />
+        <script defer src="sc.js"></script>
+        <title>Pokedex</title>
+    </head>
+    <body>
+        <div class="body-bg"></div>
+        <header>
+            <h1 id="page_title" onclick="homePage()">Pokedex</h1>
+            <arrows class="hidden">
+                <arrow id="prev_arrow"><</arrow>
+                <p id="page_number">page 1</p>
+                <arrow id="next_arrow">></arrow>
+            </arrows>
+            <burger class="burger" onclick="burgerMenu()">
+                <bar></bar>
+                <bar></bar>
+                <bar></bar>
+            </burger>
+        </header>
+        <header class="header hidden">
+            <a class="header_page" onclick="drawPkmn();burgerMenu();">Pokemon</a>
+            <a class="header_page" onclick="drawPokedex(); burgerMenu();">Pokedexes</a>
+            <a class="header_page" onclick="drawMoves();burgerMenu();">Moves</a>
+
+            <a class="header_page" onclick="drawGenerations()">Generations</a>
+            <a class="header_page" onclick="drawVersions()">Versions</a>
+            <a class="header_page" onclick="drawRegions()">Regions</a>
+
+            <a class="header_page" onclick="drawItems()">Items</a>
+        </header>
+        <main id="content" class="hidden"></main>
+    </body>
+</html>

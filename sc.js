@@ -31,7 +31,7 @@ function burgerMenu() {
     header.classList.toggle("hidden");
 }
 
-// supposed to be general, needs fixing
+// supposed to be general, needs rework [moved to own file]
 // should call other functions inside, depending on page category (e.g. sprite source, entry description source, defined by input parameters)
 
 async function draw(results) {

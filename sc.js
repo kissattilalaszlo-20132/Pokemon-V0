@@ -19,8 +19,7 @@ const homepage = new URL("https://pokeapi.co/api/v2/");
 let content; // init content
 let pageCounter;
 
-// empty for now, info page later
-function homePage() {
+function homePage() { // empty for now, info page later
     main.innerHTML = "";
     pageTitle.textContent = "Pokedex";
     main.classList.add("hidden");
@@ -33,7 +32,6 @@ function burgerMenu() {
 
 // supposed to be general, needs rework [moved to own file]
 // should call other functions inside, depending on page category (e.g. sprite source, entry description source, defined by input parameters)
-
 async function draw(results) {
     main.classList.remove("hidden"); // show entry container
     arrows.classList.remove("hidden"); // show arrows

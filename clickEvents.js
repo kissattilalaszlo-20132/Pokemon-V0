@@ -1,4 +1,14 @@
-import { draw, drawPkmn, APIfetch } from "./main.js";
+import { 
+    draw, 
+    APIfetch,
+    drawPkmn,
+    drawPokedex,
+    drawMoves,
+    drawGenerations,
+    drawVersions,
+    drawRegions,
+    drawItems
+} from "./main.js";
 
 async function genericEvents(pageContent, pageCounter, submenuName){
     const header = document.querySelector(".header"); // burger menu

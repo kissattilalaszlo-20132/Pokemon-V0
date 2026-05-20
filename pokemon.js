@@ -7,6 +7,7 @@ export function pokemonSummary(item){
     
     // sprite
     let sprite = document.createElement("img");
+    sprite.classList.add(("pokemonSprite", "sprite"));
     sprite.src = item.sprites.other.showdown.front_default;
     summary.appendChild(sprite);
 

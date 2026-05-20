@@ -1,7 +1,5 @@
 import { draw, drawPkmn, APIfetch } from "./main.js";
 
-const pageNumber = document.querySelector("#page_number");
-
 async function genericEvents(pageContent, pageCounter, submenuName){
     const header = document.querySelector(".header"); // burger menu
     function burgerMenu() {
@@ -66,6 +64,7 @@ async function genericEvents(pageContent, pageCounter, submenuName){
     });
 }
 
+const pageNumber = document.querySelector("#page_number");
 let next;
 let prev;
 

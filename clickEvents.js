@@ -13,7 +13,7 @@ import {
 async function genericEvents(pageContent, pageCounter, submenuName){
     const header = document.querySelector(".header"); // burger menu
     function burgerMenu() {
-        header.classList.toggle("hidden");
+        header.classList.toggle("closed");
     }
 
     const burger = document.querySelector("#burger");

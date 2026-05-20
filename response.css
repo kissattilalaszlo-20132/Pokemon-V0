@@ -1,3 +1,11 @@
 .hidden {
     display: none;
 }
+
+.closed {
+    height: 0;
+    padding: 0;
+    > * {
+        display: none;
+    }
+}

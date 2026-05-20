@@ -28,26 +28,8 @@ function homePage() { // empty for now, info page later
     arrows.classList.add("hidden");
 }
 
-async function nextEvent(pageContent, pageNumber, pageCounter, submenuName){
-    next = pageContent.next;
-    
-    if (next == null){
-        return;
-    }
-
-    pageContent = await APIfetch(next);
-
-    // update arrow links
-    next = pageContent.next;
+async function prevEvent(pageContent, pageNumber, submenuName){
     prev = pageContent.previous;
-
-    pageCounter++;
-    pageNumber.textContent = "page " + pageCounter; 
-    draw(pageContent, submenuName); // draw next page
-}
-
-async function prevEvent(pageContent, pageNumber, pageCounter, submenuName){
-    prev = content.previous;
 
     if(prev == null){
         return
@@ -64,6 +46,24 @@ async function prevEvent(pageContent, pageNumber, pageCounter, submenuName){
     draw(pageContent, submenuName); // draw previous page
 }
 
+async function nextEvent(pageContent, pageNumber, submenuName){
+    next = pageContent.next;
+    
+    if (next == null){
+        return;
+    }
+
+    pageContent = await APIfetch(next);
+
+    // update arrow links
+    next = pageContent.next;
+    prev = pageContent.previous;
+
+    pageCounter++;
+    pageNumber.textContent = "page " + pageCounter; 
+
+    draw(pageContent, submenuName); // draw next page
+}
 
 async function draw(pageContent, submenuName) {
     let results = pageContent.results;
@@ -73,7 +73,6 @@ async function draw(pageContent, submenuName) {
     
     arrows.classList.remove("hidden"); // show arrows
     arrows.innerHTML = '';
-
     
     // generate new nav elements
     let pageNumber = document.createElement("p");
@@ -84,20 +83,18 @@ async function draw(pageContent, submenuName) {
     prevArrow.setAttribute("id", "prev_arrow");
     prevArrow.textContent = "<";
     prevArrow.addEventListener("click", () => {
-        prevEvent(pageContent, pageNumber, pageCounter, submenuName);
+        prevEvent(pageContent, pageNumber, submenuName);
     });
 
-    arrows.appendChild(prevArrow);
-    
-    arrows.appendChild(pageNumber);
-    
     let nextArrow = document.createElement("arrow");
     nextArrow.setAttribute("id", "next_arrow");
     nextArrow.textContent = ">";
     nextArrow.addEventListener("click", () => {
-        nextEvent(pageContent, pageNumber, pageCounter, submenuName);
+        nextEvent(pageContent, pageNumber, submenuName);
     });
     
+    arrows.appendChild(prevArrow);
+    arrows.appendChild(pageNumber);
     arrows.appendChild(nextArrow);
 
     pageTitle.textContent = submenuName; // set page title

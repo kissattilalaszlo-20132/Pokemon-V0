@@ -61,13 +61,13 @@ async function nextEvent(pageContent, pageNumber, submenuName){
 
     pageCounter++;
     pageNumber.textContent = "page " + pageCounter; 
-
+    
     draw(pageContent, submenuName); // draw next page
 }
 
 async function draw(pageContent, submenuName) {
     let results = pageContent.results;
-
+    
     main.classList.remove("hidden"); // show entry container
     main.innerHTML = "";
     
@@ -78,14 +78,14 @@ async function draw(pageContent, submenuName) {
     let pageNumber = document.createElement("p");
     pageNumber.setAttribute("id", "page_number");
     pageNumber.textContent = "page " + pageCounter; 
-
+    
     let prevArrow = document.createElement("arrow");
     prevArrow.setAttribute("id", "prev_arrow");
     prevArrow.textContent = "<";
     prevArrow.addEventListener("click", () => {
         prevEvent(pageContent, pageNumber, submenuName);
     });
-
+    
     let nextArrow = document.createElement("arrow");
     nextArrow.setAttribute("id", "next_arrow");
     nextArrow.textContent = ">";
@@ -96,9 +96,10 @@ async function draw(pageContent, submenuName) {
     arrows.appendChild(prevArrow);
     arrows.appendChild(pageNumber);
     arrows.appendChild(nextArrow);
-
+    
     pageTitle.textContent = submenuName; // set page title
-
+    
+    console.clear();
     for (let i = 0; i < results.length; i++) {
         const item = results[i];
 
@@ -133,6 +134,7 @@ async function draw(pageContent, submenuName) {
         }
         main.appendChild(card);
     }
+    console.log("page loaded");
 }
 
 async function drawPkmn() {

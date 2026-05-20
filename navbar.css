@@ -3,7 +3,7 @@ header {
     gap: 20px;
 
     align-items: center;
-    justify-content:space-between;
+    justify-content: space-between;
 
     width: 100%;
     height: fit-content;
@@ -17,13 +17,13 @@ header {
         padding: 10px;
     }
     > arrows {
-        padding:0;
+        padding: 0;
         display: flex;
         gap: 5px;
 
         > * {
             padding: 13px;
-            margin:0;
+            margin: 0;
         }
         > arrow {
             cursor: pointer;
@@ -42,7 +42,9 @@ header {
     background: linear-gradient(#dd0841 0%, #c00c3c 95%);
     border: 2px hsla(0, 0%, 0%, 0.5) solid;
 
-    transition: height 0.1s ease;
+    transition: 
+        height 100ms ease -50ms,
+        border 100ms ease -50ms;
 }
 
 .header_page {
@@ -64,4 +66,11 @@ bar {
     width: 30px;
     background-color: black;
     margin: 3px 0;
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        height: 510px;
+    }
 }

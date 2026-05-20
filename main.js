@@ -38,6 +38,9 @@ async function draw(pageContent, submenuName) {
     let prevArrow = document.createElement("arrow");
     prevArrow.setAttribute("id", "prev_arrow");
     prevArrow.textContent = "<";
+    prevArrow.addEventListener("click", () => {
+        prevEvent(pageContent, pageCounter, submenuName);
+    });
     arrows.appendChild(prevArrow);
     
     let pageNumber = document.createElement("p");
@@ -48,6 +51,9 @@ async function draw(pageContent, submenuName) {
     let nextArrow = document.createElement("arrow");
     nextArrow.setAttribute("id", "next_arrow");
     nextArrow.textContent = ">";
+    nextArrow.addEventListener("click", () => {
+        nextEvent(pageContent, pageCounter, submenuName);
+    });
     arrows.appendChild(nextArrow);
 
     pageTitle.textContent = submenuName; // set page title

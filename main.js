@@ -1,5 +1,6 @@
 // imports, more to be added later
 import { pokemonSummary, pokemonDescription } from './pokemon.js';
+import { genericEvents, nextEvent, pervEvent } from './clickEvents.js'
 
 async function APIfetch(url) {
     const response = await fetch(url);
@@ -29,7 +30,6 @@ function homePage() { // empty for now, info page later
     arrows.classList.add("hidden");
 }
 
-// for some reason not recognized in HTML
 function burgerMenu() {
     header.classList.toggle("hidden");
 }
@@ -44,36 +44,10 @@ async function draw(pageContent, submenuName) {
     pageTitle.textContent = submenuName; // set page title
 
     // set next arrow click event
-    let next = content.next;
-    nextArrow.addEventListener("click", async () => {
-        if(next != null){
-            pageContent = await APIfetch(next);
-
-            // update arrow links
-            next = pageContent.next;
-            prev = pageContent.previous;
-
-            pageCounter++;
-            pageNumber.innerHTML = "page " + pageCounter; 
-            draw(pageContent); // draw next page
-        }
-    });
+    nextEvent(pageContent);
 
     // set previous arrow click event
-    let prev = content.previous;
-    prevArrow.addEventListener("click", async () => {
-        if(prev != null){
-            pageContent = await APIfetch(prev);
-
-            // update arrow links
-            next = pageContent.next;
-            prev = pageContent.previous;
-
-            pageCounter--;
-            pageNumber.innerHTML = "page " + pageCounter;
-            draw(pageContent); // draw previous page
-        }
-    });
+    pervEvent(pageContent);
 
     for (let i = 0; i < results.length; i++) {
         const item = results[i];

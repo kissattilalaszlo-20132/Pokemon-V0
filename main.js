@@ -1,6 +1,6 @@
 // imports, more to be added later
 import { pokemonSummary, pokemonDescription } from './pokemon.js';
-import { genericEvents, nextEvent, pervEvent } from './clickEvents.js'
+import { genericEvents, nextEvent, prevEvent } from './clickEvents.js'
 
 async function APIfetch(url) {
     const response = await fetch(url);
@@ -9,15 +9,11 @@ async function APIfetch(url) {
     return data;
 }
 
-const header = document.querySelector(".header"); // burger menu
-const arrows = document.querySelector("arrows"); // page number & arrows, hidden by default
-
 const main = document.querySelector("#content"); // entries display
 const pageTitle = document.querySelector("#page_title");
 
-const prevArrow = document.querySelector("#prev_arrow");
+const arrows = document.querySelector("arrows"); // page number & arrows, hidden by default
 const pageNumber = document.querySelector("#page_number");
-const nextArrow = document.querySelector("#next_arrow");
 
 const homepage = new URL("https://pokeapi.co/api/v2/");
 let content; // init content
@@ -30,24 +26,31 @@ function homePage() { // empty for now, info page later
     arrows.classList.add("hidden");
 }
 
-function burgerMenu() {
-    header.classList.toggle("hidden");
-}
-
 async function draw(pageContent, submenuName) {
     let results = pageContent.results;
 
     main.classList.remove("hidden"); // show entry container
-    arrows.classList.remove("hidden"); // show arrows
     main.innerHTML = "";
+    
+    arrows.classList.remove("hidden"); // show arrows
+    arrows.innerHTML = "";
+    
+    let prevArrow = document.createElement("arrow");
+    prevArrow.setAttribute("id", "prev_arrow");
+    prevArrow.textContent = "<";
+    arrows.appendChild(prevArrow);
+    
+    let pageNumber = document.createElement("p");
+    pageNumber.setAttribute("id", "page_number");
+    pageNumber.textContent = "page " + pageCounter; 
+    arrows.appendChild(pageNumber);
+    
+    let nextArrow = document.createElement("arrow");
+    nextArrow.setAttribute("id", "next_arrow");
+    nextArrow.textContent = ">";
+    arrows.appendChild(nextArrow);
 
     pageTitle.textContent = submenuName; // set page title
-
-    // set next arrow click event
-    nextEvent(pageContent);
-
-    // set previous arrow click event
-    pervEvent(pageContent);
 
     for (let i = 0; i < results.length; i++) {
         const item = results[i];
@@ -65,19 +68,23 @@ async function draw(pageContent, submenuName) {
         
         // other pages to call here later
         // summary / sprite
+        let subElement;
         switch (submenuName) {
             case "Pokemon":
-                card.appendChild(pokemonSummary(itemContent));
+                subElement = await pokemonSummary(itemContent);
+                card.appendChild(subElement);
             break;
         }
 
         // description
+        subElement = null;
         switch (submenuName) {
             case "Pokemon":
-                card.appendChild(pokemonDescription(itemContent));
+                subElement = await pokemonDescription(itemContent);
+                card.appendChild(subElement);
             break;  
         }
-
+        main.appendChild(card);
     }
 }
 
@@ -99,4 +106,18 @@ async function drawRegions() {} // https://pokeapi.co/api/v2/region/
 
 function drawItems() {} // https://pokeapi.co/api/v2/item/
 
-window.addEventListener("load", async () => {  });
+window.addEventListener("load", async () => { 
+    genericEvents(content, pageCounter, "Home");
+});
+
+export {
+    APIfetch, 
+    draw,
+    drawPkmn, 
+    drawPokedex, 
+    drawMoves, 
+    drawGenerations, 
+    drawVersions, 
+    drawRegions, 
+    drawItems 
+};

@@ -4,7 +4,8 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="st.css" />
-        <script defer src="main.js" type="module"></script> 
+        <script defer src="main.js" type="module"></script>
+        <script defer src="clickEvents.js" type="module"></script>
         <title>Pokedex</title>
     </head>
     <body>
@@ -29,9 +30,9 @@
 
             <a class="header_page" id="generations">Generations</a>
             <a class="header_page" id="versions">Versions</a>
-            <a class="header_page" onclick="drawRegions()">Regions</a>
+            <a class="header_page" id="regions">Regions</a>
 
-            <a class="header_page" onclick="drawItems()">Items</a>
+            <a class="header_page" id="items">Items</a>
         </header>
         <main id="content" class="hidden"></main>
     </body>

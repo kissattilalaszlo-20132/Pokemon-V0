@@ -1,3 +1,5 @@
+import { APIfetch } from "./main.js";
+
 // for pokemon submenu
 export function pokemonSummary(item){
     let summary = document.createElement("div");

@@ -1,6 +1,13 @@
-export async function genericEvents(pageContent){
-    const burgerMenu = document.querySelector("#burger");
-    burgerMenu.addEventListener("click", () => {
+import { draw, drawPkmn, APIfetch } from "./main.js";
+
+async function genericEvents(pageContent, pageCounter, submenuName){
+    const header = document.querySelector(".header"); // burger menu
+    function burgerMenu() {
+        header.classList.toggle("hidden");
+    }
+
+    const burger = document.querySelector("#burger");
+    burger.addEventListener("click", () => {
         burgerMenu();
     });
     
@@ -28,39 +35,67 @@ export async function genericEvents(pageContent){
         burgerMenu();
     });
 
-    
-}
+    const versions = document.querySelector("#versions");
+    versions.addEventListener("click", () => {
+        drawPokedex();
+        burgerMenu();
+    });
 
-export async function nextEvent(pageContent){
-    let next = pageContent.next;
+    const regions = document.querySelector("#regions");
+    regions.addEventListener("click", () => {
+        drawPokedex();
+        burgerMenu();
+    });
+
+    const items = document.querySelector("#items");
+    items.addEventListener("click", () => {
+        drawPokedex();
+        burgerMenu();
+    });
+
+    const pageNumber = document.querySelector("#page_number");
+    const nextArrow = document.querySelector("#next_arrow");
     nextArrow.addEventListener("click", async () => {
-        if(next != null){
-            pagepageContent = await APIfetch(next);
-
-            // update arrow links
-            next = pagepageContent.next;
-            prev = pagepageContent.previous;
-
-            pageCounter++;
-            pageNumber.innerHTML = "page " + pageCounter; 
-            draw(pagepageContent); // draw next page
-        }
+        nextEvent(pageContent, pageCounter, submenuName);
     });
-}
 
-export async function pervEvent(pageContent){
-    let prev = content.previous;
+    const prevArrow = document.querySelector("#prev_arrow");
     prevArrow.addEventListener("click", async () => {
-        if(prev != null){
-            pageContent = await APIfetch(prev);
-
-            // update arrow links
-            next = pageContent.next;
-            prev = pageContent.previous;
-
-            pageCounter--;
-            pageNumber.innerHTML = "page " + pageCounter;
-            draw(pageContent); // draw previous page
-        }
+        prevEvent(pageContent, pageCounter, submenuName);
     });
 }
+
+let next;
+let prev;
+
+async function nextEvent(pageContent, pageCounter, submenuName){
+    next = pageContent.next;
+    if(next != null){
+        pageContent = await APIfetch(next);
+
+        // update arrow links
+        next = pageContent.next;
+        prev = pageContent.previous;
+
+        pageCounter++;
+        pageNumber.innerHTML = "page " + pageCounter; 
+        draw(pageContent, submenuName); // draw next page
+    }
+}
+
+async function prevEvent(pageContent, pageCounter, submenuName){
+    prev = content.previous;
+    if(prev != null){
+        pageContent = await APIfetch(prev);
+
+        // update arrow links
+        next = pageContent.next;
+        prev = pageContent.previous;
+
+        pageCounter--;
+        pageNumber.innerHTML = "page " + pageCounter;
+        draw(pageContent, submenuName); // draw previous page
+    }
+}
+
+export { genericEvents, nextEvent, prevEvent }

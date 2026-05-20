@@ -1,22 +1,24 @@
 // imports, more to be added later
 import { pokemonSummary, pokemonDescription } from './pokemon.js';
-import { genericEvents, nextEvent, prevEvent } from './clickEvents.js'
+import { genericEvents } from './clickEvents.js'
 
 async function APIfetch(url) {
     const response = await fetch(url);
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     return data;
 }
 
-const main = document.querySelector("#content"); // entries display
-const pageTitle = document.querySelector("#page_title");
 
+const pageTitle = document.querySelector("#page_title"); // page name
+const main = document.querySelector("#content"); // entries display
 const arrows = document.querySelector("arrows"); // page number & arrows, hidden by default
-const pageNumber = document.querySelector("#page_number");
 
 const homepage = new URL("https://pokeapi.co/api/v2/");
 let content; // init content
+
+let next;
+let prev;
 let pageCounter;
 
 function homePage() { // empty for now, info page later
@@ -26,6 +28,43 @@ function homePage() { // empty for now, info page later
     arrows.classList.add("hidden");
 }
 
+async function nextEvent(pageContent, pageNumber, pageCounter, submenuName){
+    next = pageContent.next;
+    
+    if (next == null){
+        return;
+    }
+
+    pageContent = await APIfetch(next);
+
+    // update arrow links
+    next = pageContent.next;
+    prev = pageContent.previous;
+
+    pageCounter++;
+    pageNumber.textContent = "page " + pageCounter; 
+    draw(pageContent, submenuName); // draw next page
+}
+
+async function prevEvent(pageContent, pageNumber, pageCounter, submenuName){
+    prev = content.previous;
+
+    if(prev == null){
+        return
+    }
+
+    pageContent = await APIfetch(prev);
+
+    // update arrow links
+    next = pageContent.next;
+    prev = pageContent.previous;
+
+    pageCounter--;
+    pageNumber.textContent = "page " + pageCounter;  
+    draw(pageContent, submenuName); // draw previous page
+}
+
+
 async function draw(pageContent, submenuName) {
     let results = pageContent.results;
 
@@ -33,27 +72,32 @@ async function draw(pageContent, submenuName) {
     main.innerHTML = "";
     
     arrows.classList.remove("hidden"); // show arrows
-    arrows.innerHTML = "";
+    arrows.innerHTML = '';
+
     
+    // generate new nav elements
+    let pageNumber = document.createElement("p");
+    pageNumber.setAttribute("id", "page_number");
+    pageNumber.textContent = "page " + pageCounter; 
+
     let prevArrow = document.createElement("arrow");
     prevArrow.setAttribute("id", "prev_arrow");
     prevArrow.textContent = "<";
     prevArrow.addEventListener("click", () => {
-        prevEvent(pageContent, pageCounter, submenuName);
+        prevEvent(pageContent, pageNumber, pageCounter, submenuName);
     });
+
     arrows.appendChild(prevArrow);
     
-    let pageNumber = document.createElement("p");
-    pageNumber.setAttribute("id", "page_number");
-    pageNumber.textContent = "page " + pageCounter; 
     arrows.appendChild(pageNumber);
     
     let nextArrow = document.createElement("arrow");
     nextArrow.setAttribute("id", "next_arrow");
     nextArrow.textContent = ">";
     nextArrow.addEventListener("click", () => {
-        nextEvent(pageContent, pageCounter, submenuName);
+        nextEvent(pageContent, pageNumber, pageCounter, submenuName);
     });
+    
     arrows.appendChild(nextArrow);
 
     pageTitle.textContent = submenuName; // set page title
@@ -97,8 +141,11 @@ async function draw(pageContent, submenuName) {
 async function drawPkmn() {
     // initial values
     content = await APIfetch("https://pokeapi.co/api/v2/pokemon/?limit=50"); // first page
+
+    next = content.next;
+    prev = content.previous;
+
     pageCounter = 1; // page number reset
-    pageNumber.innerHTML = "page " + pageCounter; // page number display reset
 
     draw(content, "Pokemon"); // draw first page
 }

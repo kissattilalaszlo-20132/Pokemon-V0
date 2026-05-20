@@ -28,11 +28,7 @@ export async function pokemonSummary(item){
 
     info.appendChild(infoBuilder("color", species.color.name));
     info.appendChild(infoBuilder("habitat", species.habitat.name));
-
-    let shape = document.createElement("p");
-    shape.textContent = species.shape.name;
-
-    info.appendChild(shape);
+    info.appendChild(infoBuilder("shape", species.shape.name));
 
     let genderRate = document.createElement("p");
     switch (species.gender_rate) { // ♀️ ♂️
@@ -69,9 +65,11 @@ export async function pokemonSummary(item){
     summary.appendChild(info);
 
     // sprite
+    let spriteContainer = document.createElement("div");
     let sprite = document.createElement("img");
     sprite.src = item.sprites.other.showdown.front_default;
-    summary.appendChild(sprite);
+    spriteContainer.appendChild(sprite);
+    summary.appendChild(spriteContainer);
 
     return summary;
 }

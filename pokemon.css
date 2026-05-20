@@ -7,9 +7,13 @@
     height: 100px;
     padding: 0 10px;
     margin-bottom: 5px;
+    > div {
+        width: 40%;
+        > img {
+            min-height: 60px;
+            max-height: 100px;
 
-    > img {
-        max-height: 100px;
+        }
     }
 
     > .info {

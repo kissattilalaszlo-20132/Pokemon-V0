@@ -68,7 +68,7 @@ bar {
     margin: 3px 0;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1020px) {
     .header {
         flex-direction: column;
         height: 510px;

@@ -58,6 +58,7 @@ main {
     background-repeat: repeat;
 
     border: 1px solid hsl(39, 30%, 60%);
+    border-radius: 10px;
 }
 
 .subtext {
@@ -76,5 +77,5 @@ main {
 }
 
 @media screen and (max-width: 768px) {
-    main{ justify-content: center; }
+    main { justify-content: center; }
 }

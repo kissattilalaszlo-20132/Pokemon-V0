@@ -46,6 +46,7 @@ main {
     border-radius: 10px;
 
     text-align: center;
+    flex-grow: 1; /* enlarge when available */
 }
 
 .bg {
@@ -72,4 +73,8 @@ main {
     100% {
         background-position: 100vw 100vh;
     }
+}
+
+@media screen and (max-width: 768px) {
+    main{ justify-content: center; }
 }

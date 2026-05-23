@@ -119,8 +119,13 @@ async function draw(pageContent, submenuName) {
         let subElement;
         switch (submenuName) {
             case "Pokemon":
+                main.classList.add("Pokemon");
                 subElement = await pokemonSummary(itemContent);
                 card.appendChild(subElement);
+            break;
+            case "Pokedex":
+                main.classList.add("Pokedex");
+                subElement = await pokedexSummary(itemContent); // incomplete
             break;
         }
 
@@ -130,7 +135,10 @@ async function draw(pageContent, submenuName) {
             case "Pokemon":
                 subElement = await pokemonDescription(itemContent);
                 card.appendChild(subElement);
-            break;  
+            break;
+            case "Pokedex":
+                
+            break;
         }
         main.appendChild(card);
     }
@@ -149,7 +157,17 @@ async function drawPkmn() {
     draw(content, "Pokemon"); // draw first page
 }
 
-async function drawPokedex() {} // https://pokeapi.co/api/v2/pokedex/
+async function drawPokedex() {
+    // initial values
+    content = await APIfetch("https://pokeapi.co/api/v2/pokedex/?limit=50");
+
+    next = content.next;
+    prev = content.previous;
+
+    pageCounter = 1;
+
+    draw(content, "Pokedex");
+}
 async function drawMoves() {} // https://pokeapi.co/api/v2/move/
 
 async function drawGenerations() {} // https://pokeapi.co/api/v2/generation/

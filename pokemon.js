@@ -16,11 +16,11 @@ function infoBuilder(name, value) {
 }
 
 // for pokemon submenu
-export async function pokemonSummary(item){
+async function pokemonSummary(item){
     let summary = document.createElement("div");
     summary.classList.add("summary");
     
-    // get general info 
+    // get species info 
     const species = await APIfetch(item.species.url);
 
     let info = document.createElement("div");
@@ -69,12 +69,13 @@ export async function pokemonSummary(item){
     let sprite = document.createElement("img");
     sprite.src = item.sprites.other.showdown.front_default;
     spriteContainer.appendChild(sprite);
+    
     summary.appendChild(spriteContainer);
 
     return summary;
 }
 
-export async function pokemonDescription(item){
+async function pokemonDescription(item){
     // create container
     let descriptionContainer = document.createElement("div");
     descriptionContainer.classList.add("bg");
@@ -104,4 +105,9 @@ export async function pokemonDescription(item){
     descriptionContainer.appendChild(description);
 
     return descriptionContainer;
+}
+
+export {
+    pokemonSummary,
+    pokemonDescription
 }

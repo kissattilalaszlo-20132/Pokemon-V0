@@ -1,5 +1,6 @@
 // imports, more to be added later
 import { pokemonSummary, pokemonDescription } from './pokemon.js';
+import { pokedexSummary, pokedexDescription } from './pokedex.js';
 import { genericEvents } from './clickEvents.js'
 
 async function APIfetch(url) {
@@ -116,30 +117,31 @@ async function draw(pageContent, submenuName) {
         
         // other pages to call here later
         // summary / sprite
-        let subElement;
+        let subElement = null;
         switch (submenuName) {
             case "Pokemon":
                 main.classList.add("Pokemon");
                 subElement = await pokemonSummary(itemContent);
-                card.appendChild(subElement);
             break;
             case "Pokedex":
                 main.classList.add("Pokedex");
                 subElement = await pokedexSummary(itemContent); // incomplete
             break;
         }
+        console.log(subElement);
+        card.appendChild(subElement);
 
         // description
         subElement = null;
         switch (submenuName) {
             case "Pokemon":
                 subElement = await pokemonDescription(itemContent);
-                card.appendChild(subElement);
             break;
             case "Pokedex":
-                
+                subElement = await pokedexDescription(itemContent);
             break;
         }
+        card.appendChild(subElement);
         main.appendChild(card);
     }
     console.log("page loaded");
@@ -159,7 +161,7 @@ async function drawPkmn() {
 
 async function drawPokedex() {
     // initial values
-    content = await APIfetch("https://pokeapi.co/api/v2/pokedex/?limit=50");
+    content = await APIfetch("https://pokeapi.co/api/v2/pokedex");
 
     next = content.next;
     prev = content.previous;

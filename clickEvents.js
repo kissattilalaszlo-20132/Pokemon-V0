@@ -35,31 +35,31 @@ async function genericEvents(pageContent, pageCounter, submenuName){
 
     const moves = document.querySelector("#moves");
     moves.addEventListener("click", () => {
-        drawPokedex();
+        drawMoves();
         burgerMenu();
     });
 
     const generations = document.querySelector("#generations");
     generations.addEventListener("click", () => {
-        drawPokedex();
+        drawGenerations();
         burgerMenu();
     });
 
     const versions = document.querySelector("#versions");
     versions.addEventListener("click", () => {
-        drawPokedex();
+        drawVersions();
         burgerMenu();
     });
 
     const regions = document.querySelector("#regions");
     regions.addEventListener("click", () => {
-        drawPokedex();
+        drawRegions();
         burgerMenu();
     });
 
     const items = document.querySelector("#items");
     items.addEventListener("click", () => {
-        drawPokedex();
+        drawItems();
         burgerMenu();
     });
 }
